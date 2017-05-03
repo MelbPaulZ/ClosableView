@@ -21,21 +21,11 @@ import java.util.List;
 
 public class ClosableLinearLayout extends LinearLayout{
 
-    private final int ICON_SIZE = 100;
-
-    private final int TEXT_LEFT_MARGIN = 150;
-    private final int TEXT_SIZE = 20;
-    private final int TEXT_PADDING = 20;
-
-    private final int CLOSE_RIGHT_MARGIN = 40;
-    private final int CLOSE_SIZE = 80;
-
-    private final int ROW_HEIGHT = 200;
-    private final int ANIMATION_DURATION = 500;
 
     private HashMap<String, Integer> orderHashMap;
     private List<String> curViewList;
     private RowFactory rowFactory;
+    private OnClickListener onDeleteListener;
 
     public ClosableLinearLayout(Context context) {
         super(context);
@@ -61,8 +51,14 @@ public class ClosableLinearLayout extends LinearLayout{
 
         RelativeLayout rowLinearLayout = rowFactory.createRow(rowName, icon, text, onLeftClickListener);
         int position  = findPosition(rowName);
-        addView(rowLinearLayout, position);
-        curViewList.add(position, rowName);
+        if (rowLinearLayout.getParent()==null) {
+            addView(rowLinearLayout, position);
+            curViewList.add(position, rowName);
+        }
+    }
+
+    public void removeRow(int position){
+        curViewList.remove(position);
     }
 
     public void showClosedView(String rowName){
@@ -98,9 +94,23 @@ public class ClosableLinearLayout extends LinearLayout{
         this.orderHashMap = orderHashMap;
     }
 
+    public void setOnDeleteListener(View.OnClickListener onDeleteListener){
+        this.onDeleteListener = onDeleteListener;
+    }
+
 
     private class RowFactory{
 
+        private final int ICON_SIZE = 100;
+
+        private final int TEXT_LEFT_MARGIN = 150;
+        private final int TEXT_SIZE = 20;
+        private final int TEXT_PADDING = 20;
+
+        private final int CLOSE_RIGHT_MARGIN = 40;
+        private final int CLOSE_SIZE = 80;
+
+        private final int ROW_HEIGHT = 200;
         private HashMap<String, RelativeLayout> rowHashMap;
 
 
@@ -170,38 +180,9 @@ public class ClosableLinearLayout extends LinearLayout{
             closableViewLp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             closableViewLp.addRule(RelativeLayout.CENTER_VERTICAL);
             closeView.setLayoutParams(closableViewLp);
-            closeView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    RelativeLayout row = (RelativeLayout) v.getParent();
-                    if (row == null ){
-                        return;
-                    }
-
-                    ViewGroup rowParent = (ViewGroup) row.getParent();
-                    if (rowParent == null){
-                        return;
-                    }
-
-                    int position = rowParent.indexOfChild(row);
-                    curViewList.remove(position);
-                    rowParent.removeView(row);
-                }
-            });
+            closeView.setOnClickListener(onDeleteListener);
             rowRelativeLayout.addView(closeView);
         }
     }
 
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-
-    }
 }

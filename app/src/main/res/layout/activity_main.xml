@@ -7,33 +7,16 @@
     android:orientation="vertical"
     tools:context="com.developer.paul.closableview.MainActivity">
 
-    <com.developer.paul.closableview.ClosableLinearLayout
-        android:id="@+id/closable_linearlayout"
+    <!--<com.developer.paul.closableview.ClosableLinearLayout-->
+        <!--android:id="@+id/closable_linearlayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:animateLayoutChanges="true">-->
+    <!--</com.developer.paul.closableview.ClosableLinearLayout>-->
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true">
-    </com.developer.paul.closableview.ClosableLinearLayout>
-
-    <Button
-        android:id="@+id/location_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="Location"
-        android:textSize="15sp"
-        />
-    <Button
-        android:id="@+id/repeat_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="Repeat"
-        android:textSize="15sp"
-        />
-    <Button
-        android:id="@+id/note_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="Note"
-        android:textSize="15sp"/>
+        android:layout_height="match_parent"/>
 
 
 

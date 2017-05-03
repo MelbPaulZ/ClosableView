@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="item"
-            type="com.developer.paul.closableview.ItemViewModel"/>
+            type="com.developer.paul.closableview.ViewModel" />
     </data>
-    <com.developer.paul.closableview.ClosableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:id="@+id/fragment_linearlayout"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        >
-    </com.developer.paul.closableview.ClosableLinearLayout>
+        android:orientation="vertical">
+
+        <com.developer.paul.closableview.ClosableLinearLayout
+            android:id="@+id/fragment_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            app:clickListeners="@{item.onClickListeners}"
+            app:icons="@{item.icons}"
+            app:orderHashMap="@{item.orderHash}"
+            app:rowNames="@{item.rowNames}"
+            app:texts="@{item.texts}"></com.developer.paul.closableview.ClosableLinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{item.addLocation}"
+            android:text="Location"
+            android:textSize="18sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{item.addRepeat}"
+            android:text="Repeat"
+            android:textSize="18sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{item.addNote}"
+            android:text="Note"
+            android:textSize="18sp" />
+    </LinearLayout>
 </layout>
