@@ -16,7 +16,8 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ClosableFragment fragment = new ClosableFragment();
+//        ClosableFragment fragment = new ClosableFragment();
+        ClosableBtnFragment fragment = new ClosableBtnFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
 //        closableLinearLayout = (ClosableLinearLayout) findViewById(R.id.closable_linearlayout);

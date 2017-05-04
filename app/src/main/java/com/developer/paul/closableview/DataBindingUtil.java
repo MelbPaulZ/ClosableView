@@ -4,6 +4,8 @@ import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.util.HashMap;
@@ -48,6 +50,40 @@ public class DataBindingUtil {
                 }
             });
         }
+    }
+
+    @BindingAdapter(value = {"orderHashMap","buttonItems"})
+    public static void setButtons(final ClosableButtonLinearLayout closableButtonLinearLayout
+            , HashMap<String, Integer> orderHashMap, final List<ButtonItem> buttonItems){
+        if (closableButtonLinearLayout==null){
+            return;
+        }
+
+        closableButtonLinearLayout.setOrderHash(orderHashMap);
+        for (ButtonItem buttonItem: buttonItems){
+            closableButtonLinearLayout.addButton(buttonItem);
+        }
+        closableButtonLinearLayout.setOnDeleteListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RelativeLayout btnLayout = (RelativeLayout) v.getParent();
+                if (btnLayout==null){
+                    return;
+                }
+
+                LinearLayout btnLayoutParent = (LinearLayout) btnLayout.getParent();
+                if (btnLayoutParent==null){
+                    return;
+                }
+
+                int position = btnLayoutParent.indexOfChild(btnLayout);
+                buttonItems.remove(position);
+                closableButtonLinearLayout.remoteButton(position);
+                btnLayoutParent.removeView(btnLayout);
+            }
+        });
+
+
     }
 
 }

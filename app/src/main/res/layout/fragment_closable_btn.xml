@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="vm"
+            type="com.developer.paul.closableview.ButtonViewModel"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.developer.paul.closableview.ClosableButtonLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            app:orderHashMap="@{vm.orderHashMap}"
+            app:buttonItems="@{vm.buttonItems}"/>
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="Location"
+            android:textSize="15sp"
+            android:onClick="@{vm.addLocation()}"/>
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="Note"
+            android:textSize="15sp"
+            android:onClick="@{vm.addNote()}"/>
+
+    </LinearLayout>
+</layout>
