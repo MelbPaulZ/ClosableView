@@ -20,11 +20,9 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:orientation="vertical"
-            app:clickListeners="@{item.onClickListeners}"
-            app:icons="@{item.icons}"
             app:orderHashMap="@{item.orderHash}"
-            app:rowNames="@{item.rowNames}"
-            app:texts="@{item.texts}"></com.developer.paul.closableview.ClosableLinearLayout>
+            app:rowItems="@{item.rowItems}"
+            />
 
         <Button
             android:layout_width="wrap_content"

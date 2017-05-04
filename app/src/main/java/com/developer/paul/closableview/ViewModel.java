@@ -15,10 +15,7 @@ import java.util.HashMap;
  */
 
 public class ViewModel extends BaseObservable {
-    private ObservableList<String> rowNames = new ObservableArrayList<>();
-    private ObservableList<Drawable> icons = new ObservableArrayList<>();
-    private ObservableList<String> texts = new ObservableArrayList<>();
-    private ObservableList<View.OnClickListener> onClickListeners = new ObservableArrayList<>();;
+    private ObservableList<RowItem> rowItems = new ObservableArrayList<>();
     private HashMap<String, Integer> orderHash;
 
     public ViewModel(HashMap<String, Integer> orderHash) {
@@ -26,43 +23,13 @@ public class ViewModel extends BaseObservable {
     }
 
     @Bindable
-    public ObservableList<String> getRowNames() {
-        return rowNames;
+    public ObservableList<RowItem> getRowItems() {
+        return rowItems;
     }
 
-    public void setRowNames(ObservableList<String> rowNames) {
-        this.rowNames = rowNames;
-        notifyPropertyChanged(BR.rowNames);
-    }
-
-    @Bindable
-    public ObservableList<Drawable> getIcons() {
-        return icons;
-    }
-
-    public void setIcons(ObservableList<Drawable> icons) {
-        this.icons = icons;
-        notifyPropertyChanged(BR.icons);
-    }
-
-    @Bindable
-    public ObservableList<String> getTexts() {
-        return texts;
-    }
-
-    public void setTexts(ObservableList<String> texts) {
-        this.texts = texts;
-        notifyPropertyChanged(BR.texts);
-    }
-
-    @Bindable
-    public ObservableList<View.OnClickListener> getOnClickListeners() {
-        return onClickListeners;
-    }
-
-    public void setOnClickListeners(ObservableList<View.OnClickListener> onClickListeners) {
-        this.onClickListeners = onClickListeners;
-        notifyPropertyChanged(BR.onClickListeners);
+    public void setRowItems(ObservableList<RowItem> rowItems) {
+        this.rowItems = rowItems;
+        notifyPropertyChanged(BR.rowItems);
     }
 
     @Bindable
@@ -74,7 +41,7 @@ public class ViewModel extends BaseObservable {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (rowNames.contains("Location")){
+                if (containRow("Location")){
                     return;
                 }
                 View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -83,11 +50,8 @@ public class ViewModel extends BaseObservable {
                         Toast.makeText(v.getContext(), "Location", Toast.LENGTH_SHORT).show();
                     }
                 };
-                addInList(v, "Location"
-                        , v.getResources().getDrawable(R.drawable.contact_male_icon)
-                        , "Location"
-                        ,onClickListener
-                        , findPosition("Location"));
+
+                addInList("Location", v.getResources().getDrawable(R.drawable.contact_male_icon), "Location", onClickListener, findPosition("Location"));
 
             }
         };
@@ -97,7 +61,7 @@ public class ViewModel extends BaseObservable {
         return new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (rowNames.contains("Repeat")){
+                if (containRow("Repeat")){
                     return;
                 }
                 View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -106,11 +70,7 @@ public class ViewModel extends BaseObservable {
                         Toast.makeText(v.getContext(), "Repeat", Toast.LENGTH_SHORT).show();
                     }
                 };
-                addInList(v ,"Repeat"
-                        , v.getResources().getDrawable(R.drawable.contact_female_icon)
-                        , "Repeat"
-                        , onClickListener
-                        , findPosition("Repeat"));
+                addInList("Repeat", v.getResources().getDrawable(R.drawable.contact_female_icon), "Repeat", onClickListener, findPosition("Repeat"));
 
             }
         };
@@ -120,7 +80,7 @@ public class ViewModel extends BaseObservable {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (rowNames.contains("Note")){
+                if (containRow("Note")){
                     return;
                 }
                 View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -129,7 +89,7 @@ public class ViewModel extends BaseObservable {
                         Toast.makeText(v.getContext(), "Note", Toast.LENGTH_SHORT).show();
                     }
                 };
-                addInList(v, "Note"
+                addInList("Note"
                         , v.getResources().getDrawable(R.drawable.icon_bg_backarrow)
                         , "Note"
                         , onClickListener
@@ -138,28 +98,30 @@ public class ViewModel extends BaseObservable {
         };
     }
 
-    private void addInList(
-            View v
-            ,String rowName
-            ,Drawable icon
-            ,String text
-            ,View.OnClickListener onClickListener
-            ,int position){
-        rowNames.add(position, rowName);
-        icons.add(position, icon);
-        texts.add(position, text);
-        onClickListeners.add(position, onClickListener);
-        notifyPropertyChanged(BR.rowNames);
-        notifyPropertyChanged(BR.icons);
-        notifyPropertyChanged(BR.texts);
-        notifyPropertyChanged(BR.onClickListeners);
+    private boolean containRow(String rowName){
+        for (RowItem rowItem: rowItems){
+            if (rowItem.getRowName().equals(rowName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void addInList(String rowName, Drawable icon, String text, View.OnClickListener onClickListener, int position){
+        RowItem rowItem = new RowItem();
+        rowItem.setRowName(rowName);
+        rowItem.setIcon(icon);
+        rowItem.setText(text);
+        rowItem.setClickListener(onClickListener);
+        rowItems.add(position, rowItem);
+        notifyPropertyChanged(BR.rowItems);
     }
 
     private int findPosition(String rowName){
-        int len = rowNames.size();
+        int len = rowItems.size();
         int rowNumIndex = orderHash.get(rowName);
         for (int i = 0 ; i < len ; i++){
-            int curViewIndex = orderHash.get(rowNames.get(i));
+            int curViewIndex = orderHash.get(rowItems.get(i).getRowName());
             if (curViewIndex>=rowNumIndex){
                 return i;
             }

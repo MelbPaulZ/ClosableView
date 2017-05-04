@@ -21,7 +21,6 @@ import java.util.List;
 
 public class ClosableLinearLayout extends LinearLayout{
 
-
     private HashMap<String, Integer> orderHashMap;
     private List<String> curViewList;
     private RowFactory rowFactory;
@@ -44,38 +43,17 @@ public class ClosableLinearLayout extends LinearLayout{
         rowFactory = new RowFactory();
     }
 
-    public void addRow(String rowName,
-                       Drawable icon,
-                       String text,
-                       OnClickListener onLeftClickListener){
-
-        RelativeLayout rowLinearLayout = rowFactory.createRow(rowName, icon, text, onLeftClickListener);
-        int position  = findPosition(rowName);
-        if (rowLinearLayout.getParent()==null) {
+    public void addRow(RowItem rowItem){
+        RelativeLayout rowLinearLayout = rowFactory.createRow(rowItem);
+        int position  = findPosition(rowItem.getRowName());
+        if (rowLinearLayout.getParent()==null){
+            curViewList.add(position,rowItem.getRowName());
             addView(rowLinearLayout, position);
-            curViewList.add(position, rowName);
         }
     }
 
     public void removeRow(int position){
         curViewList.remove(position);
-    }
-
-    public void showClosedView(String rowName){
-        RelativeLayout rowRelativeLayout = rowFactory.findRow(rowName);
-        if (rowRelativeLayout==null){
-            return;
-        }
-        int position  = findPosition(rowName);
-
-        if (rowRelativeLayout.getParent()!=null){
-            // if the view is already added, then do nothing
-            return;
-        }
-
-        addView(rowRelativeLayout, position);
-        curViewList.add(position, rowName);
-
     }
 
     private int findPosition(String rowName){
@@ -98,7 +76,6 @@ public class ClosableLinearLayout extends LinearLayout{
         this.onDeleteListener = onDeleteListener;
     }
 
-
     private class RowFactory{
 
         private final int ICON_SIZE = 100;
@@ -111,7 +88,7 @@ public class ClosableLinearLayout extends LinearLayout{
         private final int CLOSE_SIZE = 80;
 
         private final int ROW_HEIGHT = 200;
-        private HashMap<String, RelativeLayout> rowHashMap;
+        private HashMap<RowItem, RelativeLayout> rowHashMap;
 
 
         public RowFactory() {
@@ -119,24 +96,17 @@ public class ClosableLinearLayout extends LinearLayout{
 
         }
 
-        public RelativeLayout createRow(String rowName,
-                                        Drawable icon,
-                                        String text,
-                                        OnClickListener onLeftClickListener){
-            RelativeLayout row = rowHashMap.get(rowName);
-            if (row==null) {
+        public RelativeLayout createRow(RowItem rowItem){
+            RelativeLayout row = rowHashMap.get(rowItem);
+            if (row==null){
                 RelativeLayout rowRelativeLayout = getRelativeLayout();
-                addIconView(icon, rowRelativeLayout);
-                addDisplayText(text, rowRelativeLayout, onLeftClickListener);
+                addIconView(rowItem.getIcon(), rowRelativeLayout);
+                addDisplayText(rowItem.getText(), rowRelativeLayout, rowItem.getClickListener());
                 addClosableView(rowRelativeLayout);
-                rowHashMap.put(rowName, rowRelativeLayout);
+                rowHashMap.put(rowItem, rowRelativeLayout);
                 row = rowRelativeLayout;
             }
             return row;
-        }
-
-        public RelativeLayout findRow(String rowName){
-            return rowHashMap.get(rowName);
         }
 
         private RelativeLayout getRelativeLayout(){

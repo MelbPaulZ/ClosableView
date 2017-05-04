@@ -14,52 +14,35 @@ import java.util.List;
  */
 
 public class DataBindingUtil {
-    @BindingAdapter(value = {"orderHashMap", "rowNames","icons", "texts", "clickListeners"})
+    @BindingAdapter(value = {"orderHashMap", "rowItems"})
     public static void setRows(final ClosableLinearLayout closableLinearLayout,
                                HashMap<String, Integer> orderHashMap,
-                               final List<String> rowNames,
-                               final List<Drawable> icons,
-                               final List<String> texts,
-                               final List<View.OnClickListener> clickListeners) {
-        if (rowNames==null || icons==null || texts==null || clickListeners==null){
+                               final List<RowItem> rowItems) {
+        if (rowItems == null){
             return;
         }
-        if (!sameLength(rowNames.size(), icons.size(), texts.size(), clickListeners.size())){
-            try {
-                throw new Exception("Params length is not same");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
-        if (closableLinearLayout!=null){
+        if (closableLinearLayout!=null) {
             closableLinearLayout.setOrderHashMap(orderHashMap);
-            int size = rowNames.size();
-            for (int i = 0 ; i < size ; i++){
-                closableLinearLayout.addRow(
-                        rowNames.get(i),
-                        icons.get(i),
-                        texts.get(i),
-                        clickListeners.get(i));
+            int size = rowItems.size();
+            for (int i = 0; i < size; i++) {
+                closableLinearLayout.addRow(rowItems.get(i));
             }
             closableLinearLayout.setOnDeleteListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     RelativeLayout row = (RelativeLayout) v.getParent();
-                    if (row == null ){
+                    if (row == null) {
                         return;
                     }
 
                     ViewGroup rowParent = (ViewGroup) row.getParent();
-                    if (rowParent == null){
+                    if (rowParent == null) {
                         return;
                     }
 
                     int position = rowParent.indexOfChild(row);
-                    rowNames.remove(position);
-                    icons.remove(position);
-                    texts.remove(position);
-                    clickListeners.remove(position);
+                    rowItems.remove(position);
                     closableLinearLayout.removeRow(position);
                     rowParent.removeView(row);
                 }
@@ -67,16 +50,4 @@ public class DataBindingUtil {
         }
     }
 
-    public static boolean sameLength(int... nums){
-        if (nums.length==0){
-            return true;
-        }
-        int curNum = nums[0];
-        for (int num: nums){
-            if (num!=curNum){
-                return false;
-            }
-        }
-        return true;
-    }
 }
