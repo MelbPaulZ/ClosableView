@@ -7,6 +7,8 @@ import android.databinding.ObservableList;
 import android.view.View;
 import android.widget.Toast;
 
+import com.developer.paul.closableview.closableItem.ButtonItem;
+
 import java.util.HashMap;
 
 /**
@@ -26,24 +28,16 @@ public class ButtonViewModel extends BaseObservable {
         return buttonItems;
     }
 
-    public void setButtonItems(ObservableList<ButtonItem> buttonItems) {
-        this.buttonItems = buttonItems;
-        notifyPropertyChanged(BR.buttonItems);
-    }
 
     @Bindable
     public HashMap<String, Integer> getOrderHashMap() {
         return orderHashMap;
     }
 
-    public void setOrderHashMap(HashMap<String, Integer> orderHashMap) {
-        this.orderHashMap = orderHashMap;
-        notifyPropertyChanged(BR.orderHashMap);
-    }
 
     public boolean isContainBtn(String buttonName){
         for (ButtonItem buttonItem: buttonItems){
-            if (buttonItem.getButtonName().equals(buttonName)){
+            if (buttonItem.getItemName().equals(buttonName)){
                 return true;
             }
         }
@@ -58,12 +52,34 @@ public class ButtonViewModel extends BaseObservable {
                     return;
                 }
                 ButtonItem btnItem = new ButtonItem();
-                btnItem.setButtonName("Location");
-                btnItem.setIcon(v.getResources().getDrawable(R.drawable.contact_female_icon));
+                btnItem.setItemName("Location");
+                btnItem.setIcon(v.getResources().getDrawable(R.drawable.test_female_icon));
                 View.OnClickListener onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(v.getContext(), "Location", Toast.LENGTH_SHORT).show();
+                    }
+                };
+                btnItem.setOnClickListener(onClickListener);
+                buttonItems.add(btnItem);
+            }
+        };
+    }
+
+    public View.OnClickListener addRepeat(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isContainBtn("Repeat")){
+                    return;
+                }
+                ButtonItem btnItem = new ButtonItem();
+                btnItem.setItemName("Repeat");
+                btnItem.setIcon(v.getResources().getDrawable(R.drawable.test_male_icon));
+                View.OnClickListener onClickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(v.getContext(), "Repeat", Toast.LENGTH_SHORT).show();
                     }
                 };
                 btnItem.setOnClickListener(onClickListener);
@@ -80,8 +96,8 @@ public class ButtonViewModel extends BaseObservable {
                     return;
                 }
                 ButtonItem btnItem = new ButtonItem();
-                btnItem.setButtonName("Note");
-                btnItem.setIcon(v.getResources().getDrawable(R.drawable.contact_male_icon));
+                btnItem.setItemName("Note");
+                btnItem.setIcon(v.getResources().getDrawable(R.drawable.test_backarrow));
                 View.OnClickListener onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -93,4 +109,7 @@ public class ButtonViewModel extends BaseObservable {
             }
         };
     }
+
+
+
 }

@@ -1,24 +1,28 @@
-package com.developer.paul.closableview;
+package com.developer.paul.closableview.closableItem;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
+
+import com.developer.paul.closableview.interfaces.ClosableItem;
 
 /**
  * Created by Paul on 4/5/17.
  */
 
-public class RowItem {
-    private String rowName;
+public class RowItem implements ClosableItem {
+    private String itemName;
     private Drawable icon;
     private String text;
     private View.OnClickListener clickListener;
 
-    public String getRowName() {
-        return rowName;
+    @Override
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setRowName(String rowName) {
-        this.rowName = rowName;
+    @Override
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public Drawable getIcon() {
@@ -44,4 +48,6 @@ public class RowItem {
     public void setClickListener(View.OnClickListener clickListener) {
         this.clickListener = clickListener;
     }
+
+
 }

@@ -7,6 +7,10 @@
         <variable
             name="item"
             type="com.developer.paul.closableview.ViewModel" />
+
+        <variable
+            name="vm"
+            type="com.developer.paul.closableview.ButtonViewModel"/>
     </data>
 
     <LinearLayout
@@ -14,14 +18,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.developer.paul.closableview.ClosableLinearLayout
+        <com.developer.paul.closableview.closablelayouts.ClosableRowLinearLayout
             android:id="@+id/fragment_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:orientation="vertical"
             app:orderHashMap="@{item.orderHash}"
-            app:rowItems="@{item.rowItems}"
+            app:items="@{item.rowItems}"
             />
 
         <Button
@@ -44,5 +48,34 @@
             android:onClick="@{item.addNote}"
             android:text="Note"
             android:textSize="18sp" />
+
+
+        <com.developer.paul.closableview.closablelayouts.ClosableButtonLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            app:orderHashMap="@{vm.orderHashMap}"
+            app:items="@{vm.buttonItems}"/>
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="Location"
+            android:textSize="15sp"
+            android:onClick="@{vm.addLocation()}"/>
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="Repeat"
+            android:textSize="15sp"
+            android:onClick="@{vm.addRepeat()}"/>
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="Note"
+            android:textSize="15sp"
+            android:onClick="@{vm.addNote()}"/>
     </LinearLayout>
 </layout>

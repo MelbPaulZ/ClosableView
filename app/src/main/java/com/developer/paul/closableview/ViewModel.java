@@ -8,6 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Toast;
 
+import com.developer.paul.closableview.closableItem.RowItem;
+
 import java.util.HashMap;
 
 /**
@@ -25,11 +27,6 @@ public class ViewModel extends BaseObservable {
     @Bindable
     public ObservableList<RowItem> getRowItems() {
         return rowItems;
-    }
-
-    public void setRowItems(ObservableList<RowItem> rowItems) {
-        this.rowItems = rowItems;
-        notifyPropertyChanged(BR.rowItems);
     }
 
     @Bindable
@@ -51,7 +48,7 @@ public class ViewModel extends BaseObservable {
                     }
                 };
 
-                addInList("Location", v.getResources().getDrawable(R.drawable.contact_male_icon), "Location", onClickListener, findPosition("Location"));
+                addInList("Location", v.getResources().getDrawable(R.drawable.test_male_icon), "Location", onClickListener);
 
             }
         };
@@ -70,7 +67,7 @@ public class ViewModel extends BaseObservable {
                         Toast.makeText(v.getContext(), "Repeat", Toast.LENGTH_SHORT).show();
                     }
                 };
-                addInList("Repeat", v.getResources().getDrawable(R.drawable.contact_female_icon), "Repeat", onClickListener, findPosition("Repeat"));
+                addInList("Repeat", v.getResources().getDrawable(R.drawable.test_female_icon), "Repeat", onClickListener);
 
             }
         };
@@ -90,42 +87,30 @@ public class ViewModel extends BaseObservable {
                     }
                 };
                 addInList("Note"
-                        , v.getResources().getDrawable(R.drawable.icon_bg_backarrow)
+                        , v.getResources().getDrawable(R.drawable.test_backarrow)
                         , "Note"
-                        , onClickListener
-                        , findPosition("Note"));
+                        , onClickListener);
             }
         };
     }
 
     private boolean containRow(String rowName){
         for (RowItem rowItem: rowItems){
-            if (rowItem.getRowName().equals(rowName)){
+            if (rowItem.getItemName().equals(rowName)){
                 return true;
             }
         }
         return false;
     }
 
-    private void addInList(String rowName, Drawable icon, String text, View.OnClickListener onClickListener, int position){
+    private void addInList(String rowName, Drawable icon, String text, View.OnClickListener onClickListener){
         RowItem rowItem = new RowItem();
-        rowItem.setRowName(rowName);
+        rowItem.setItemName(rowName);
         rowItem.setIcon(icon);
         rowItem.setText(text);
         rowItem.setClickListener(onClickListener);
-        rowItems.add(position, rowItem);
+        rowItems.add(rowItem);
         notifyPropertyChanged(BR.rowItems);
     }
 
-    private int findPosition(String rowName){
-        int len = rowItems.size();
-        int rowNumIndex = orderHash.get(rowName);
-        for (int i = 0 ; i < len ; i++){
-            int curViewIndex = orderHash.get(rowItems.get(i).getRowName());
-            if (curViewIndex>=rowNumIndex){
-                return i;
-            }
-        }
-        return len;
-    }
 }

@@ -7,12 +7,12 @@
     android:orientation="vertical"
     tools:context="com.developer.paul.closableview.MainActivity">
 
-    <!--<com.developer.paul.closableview.ClosableLinearLayout-->
+    <!--<com.developer.paul.closableview.closablelayouts.ClosableLinearLayout-->
         <!--android:id="@+id/closable_linearlayout"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:animateLayoutChanges="true">-->
-    <!--</com.developer.paul.closableview.ClosableLinearLayout>-->
+    <!--</com.developer.paul.closableview.closablelayouts.ClosableLinearLayout>-->
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"

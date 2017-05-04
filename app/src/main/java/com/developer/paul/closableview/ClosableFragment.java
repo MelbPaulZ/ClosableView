@@ -20,6 +20,7 @@ public class ClosableFragment extends Fragment {
 
     private FragmentClosableBinding binding;
     private ViewModel viewModel;
+    private ButtonViewModel buttonViewModel;
 
     @Nullable
     @Override
@@ -36,6 +37,8 @@ public class ClosableFragment extends Fragment {
         orderHash.put("Repeat", 1);
         orderHash.put("Note",2);
         viewModel = new ViewModel(orderHash);
+        buttonViewModel = new ButtonViewModel(orderHash);
         binding.setItem(viewModel);
+        binding.setVm(buttonViewModel);
     }
 }

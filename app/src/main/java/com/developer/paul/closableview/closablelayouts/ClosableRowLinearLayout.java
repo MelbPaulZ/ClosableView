@@ -1,4 +1,4 @@
-package com.developer.paul.closableview;
+package com.developer.paul.closableview.closablelayouts;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -11,73 +11,44 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.developer.paul.closableview.R;
+import com.developer.paul.closableview.closableItem.RowItem;
+import com.developer.paul.closableview.interfaces.ClosableFactory;
+
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Paul on 3/5/17.
  */
 
-public class ClosableLinearLayout extends LinearLayout{
+public class ClosableRowLinearLayout extends ClosableBaseLinearLayout<RowItem> {
 
-    private HashMap<String, Integer> orderHashMap;
-    private List<String> curViewList;
-    private RowFactory rowFactory;
-    private OnClickListener onDeleteListener;
 
-    public ClosableLinearLayout(Context context) {
+    public ClosableRowLinearLayout(Context context) {
         super(context);
         init();
     }
 
-    public ClosableLinearLayout(Context context, @Nullable AttributeSet attrs) {
+    public ClosableRowLinearLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
     private void init(){
         setOrientation(LinearLayout.VERTICAL);
-        orderHashMap = new HashMap<>();
-        curViewList = new ArrayList<>();
-        rowFactory = new RowFactory();
     }
 
-    public void addRow(RowItem rowItem){
-        RelativeLayout rowLinearLayout = rowFactory.createRow(rowItem);
-        int position  = findPosition(rowItem.getRowName());
-        if (rowLinearLayout.getParent()==null){
-            curViewList.add(position,rowItem.getRowName());
-            addView(rowLinearLayout, position);
-        }
-    }
-
-    public void removeRow(int position){
-        curViewList.remove(position);
-    }
-
-    private int findPosition(String rowName){
-        int len = curViewList.size();
-        int rowNumIndex = orderHashMap.get(rowName);
-        for (int i = 0 ; i < len ; i++){
-            int curViewIndex = orderHashMap.get(curViewList.get(i));
-            if (curViewIndex>=rowNumIndex){
-                return i;
-            }
-        }
-        return len;
-    }
-
-    public void setOrderHashMap(HashMap<String, Integer> orderHashMap) {
-        this.orderHashMap = orderHashMap;
+    @Override
+    protected ClosableFactory getFactory() {
+        return new RowFactory();
     }
 
     public void setOnDeleteListener(View.OnClickListener onDeleteListener){
-        this.onDeleteListener = onDeleteListener;
+         closableFactory.setOnDeleteListener(onDeleteListener);
     }
 
-    private class RowFactory{
 
+    private class RowFactory implements ClosableFactory<RowItem>{
         private final int ICON_SIZE = 100;
 
         private final int TEXT_LEFT_MARGIN = 150;
@@ -88,18 +59,19 @@ public class ClosableLinearLayout extends LinearLayout{
         private final int CLOSE_SIZE = 80;
 
         private final int ROW_HEIGHT = 200;
-        private HashMap<RowItem, RelativeLayout> rowHashMap;
+        private HashMap<RowItem, ClosableRelativeLayout> rowHashMap;
+        private OnClickListener onDeleteListener;
 
-
-        public RowFactory() {
+        RowFactory() {
             rowHashMap = new HashMap<>();
-
         }
 
-        public RelativeLayout createRow(RowItem rowItem){
-            RelativeLayout row = rowHashMap.get(rowItem);
+
+        @Override
+        public ClosableRelativeLayout create(RowItem rowItem) {
+            ClosableRelativeLayout row = rowHashMap.get(rowItem);
             if (row==null){
-                RelativeLayout rowRelativeLayout = getRelativeLayout();
+                ClosableRelativeLayout rowRelativeLayout = getRelativeLayout(rowItem);
                 addIconView(rowItem.getIcon(), rowRelativeLayout);
                 addDisplayText(rowItem.getText(), rowRelativeLayout, rowItem.getClickListener());
                 addClosableView(rowRelativeLayout);
@@ -109,11 +81,23 @@ public class ClosableLinearLayout extends LinearLayout{
             return row;
         }
 
-        private RelativeLayout getRelativeLayout(){
-            RelativeLayout rowLinearLayout = new RelativeLayout(getContext());
-            rowLinearLayout.setLayoutParams(new ViewGroup.LayoutParams(
+        @Override
+        public OnClickListener getCloseOnClickListener(RowItem rowItem) {
+            return onDeleteListener;
+        }
+
+        @Override
+        public void setOnDeleteListener(OnClickListener onDeleteListener) {
+            this.onDeleteListener = onDeleteListener;
+        }
+
+
+        private ClosableRelativeLayout getRelativeLayout(RowItem rowItem){
+            ClosableRelativeLayout rowLayout = new ClosableRelativeLayout(getContext());
+            rowLayout.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ROW_HEIGHT));
-            return rowLinearLayout;
+            rowLayout.setClosableItem(rowItem);
+            return rowLayout;
         }
 
         private void addIconView(Drawable icon, RelativeLayout rowRelativeLayout){
@@ -144,7 +128,7 @@ public class ClosableLinearLayout extends LinearLayout{
 
         private void addClosableView(RelativeLayout rowRelativeLayout){
             ImageView closeView = new ImageView(getContext());
-            closeView.setImageDrawable(getResources().getDrawable(R.drawable.icon_bg_backarrow));
+            closeView.setImageDrawable(getResources().getDrawable(R.drawable.test_backarrow));
             RelativeLayout.LayoutParams closableViewLp = new RelativeLayout.LayoutParams(CLOSE_SIZE, CLOSE_SIZE);
             closableViewLp.rightMargin = CLOSE_RIGHT_MARGIN;
             closableViewLp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -153,6 +137,7 @@ public class ClosableLinearLayout extends LinearLayout{
             closeView.setOnClickListener(onDeleteListener);
             rowRelativeLayout.addView(closeView);
         }
+
     }
 
 }
