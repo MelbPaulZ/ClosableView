@@ -1,4 +1,4 @@
-package com.developer.paul.closableview.closablelayouts;
+package com.developer.paul.closabledatabindingview.closablelayouts;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -7,13 +7,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.developer.paul.closableview.R;
-import com.developer.paul.closableview.closableItem.RowItem;
-import com.developer.paul.closableview.interfaces.ClosableFactory;
+import com.developer.paul.closabledatabindingview.R;
+import com.developer.paul.closabledatabindingview.closableItem.RowItem;
+import com.developer.paul.closabledatabindingview.interfaces.ClosableFactory;
 
 import java.util.HashMap;
 
@@ -35,7 +34,7 @@ public class ClosableRowLinearLayout extends ClosableBaseLinearLayout<RowItem> {
     }
 
     private void init(){
-        setOrientation(LinearLayout.VERTICAL);
+        setOrientation(VERTICAL);
     }
 
     @Override

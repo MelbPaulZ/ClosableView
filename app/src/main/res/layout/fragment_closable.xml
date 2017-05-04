@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.developer.paul.closableview.closablelayouts.ClosableRowLinearLayout
+        <com.developer.paul.closabledatabindingview.closablelayouts.ClosableRowLinearLayout
             android:id="@+id/fragment_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:textSize="18sp" />
 
 
-        <com.developer.paul.closableview.closablelayouts.ClosableButtonLinearLayout
+        <com.developer.paul.closabledatabindingview.closablelayouts.ClosableButtonLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"

@@ -1,11 +1,12 @@
-package com.developer.paul.closableview.closablelayouts;
+package com.developer.paul.closabledatabindingview.closablelayouts;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-import com.developer.paul.closableview.interfaces.ClosableFactory;
-import com.developer.paul.closableview.interfaces.ClosableItem;
+
+import com.developer.paul.closabledatabindingview.interfaces.ClosableFactory;
+import com.developer.paul.closabledatabindingview.interfaces.ClosableItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;

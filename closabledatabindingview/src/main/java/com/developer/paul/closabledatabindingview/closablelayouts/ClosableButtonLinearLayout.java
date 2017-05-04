@@ -1,4 +1,4 @@
-package com.developer.paul.closableview.closablelayouts;
+package com.developer.paul.closabledatabindingview.closablelayouts;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.developer.paul.closableview.closableItem.ButtonItem;
-import com.developer.paul.closableview.interfaces.ClosableFactory;
+import com.developer.paul.closabledatabindingview.closableItem.ButtonItem;
+import com.developer.paul.closabledatabindingview.interfaces.ClosableFactory;
 
 import java.util.HashMap;
 

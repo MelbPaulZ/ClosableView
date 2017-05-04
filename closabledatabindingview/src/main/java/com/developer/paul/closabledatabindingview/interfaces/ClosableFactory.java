@@ -1,9 +1,8 @@
-package com.developer.paul.closableview.interfaces;
+package com.developer.paul.closabledatabindingview.interfaces;
 
 import android.view.View;
-import android.widget.RelativeLayout;
 
-import com.developer.paul.closableview.closablelayouts.ClosableRelativeLayout;
+import com.developer.paul.closabledatabindingview.closablelayouts.ClosableRelativeLayout;
 
 /**
  * Created by Paul on 4/5/17.

@@ -1,4 +1,4 @@
-package com.developer.paul.closableview.interfaces;
+package com.developer.paul.closabledatabindingview.interfaces;
 
 /**
  * Created by Paul on 4/5/17.

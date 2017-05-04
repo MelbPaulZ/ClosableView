@@ -1,10 +1,10 @@
-package com.developer.paul.closableview.closablelayouts;
+package com.developer.paul.closabledatabindingview.closablelayouts;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.developer.paul.closableview.interfaces.ClosableItem;
+import com.developer.paul.closabledatabindingview.interfaces.ClosableItem;
 
 /**
  * Created by Paul on 4/5/17.

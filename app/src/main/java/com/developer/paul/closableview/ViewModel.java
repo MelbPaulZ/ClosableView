@@ -8,7 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Toast;
 
-import com.developer.paul.closableview.closableItem.RowItem;
+
+import com.developer.paul.closabledatabindingview.closableItem.RowItem;
 
 import java.util.HashMap;
 

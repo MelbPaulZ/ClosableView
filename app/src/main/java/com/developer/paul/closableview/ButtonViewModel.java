@@ -6,8 +6,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.view.View;
 import android.widget.Toast;
-
-import com.developer.paul.closableview.closableItem.ButtonItem;
+import com.developer.paul.closabledatabindingview.closableItem.ButtonItem;
 
 import java.util.HashMap;
 

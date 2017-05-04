@@ -1,13 +1,12 @@
-package com.developer.paul.closableview.utils;
+package com.developer.paul.closabledatabindingview.utils;
 
 import android.databinding.BindingAdapter;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import com.developer.paul.closableview.closablelayouts.ClosableBaseLinearLayout;
-import com.developer.paul.closableview.closablelayouts.ClosableRelativeLayout;
-import com.developer.paul.closableview.interfaces.ClosableItem;
+import com.developer.paul.closabledatabindingview.closablelayouts.ClosableRelativeLayout;
+import com.developer.paul.closabledatabindingview.interfaces.ClosableItem;
+import com.developer.paul.closabledatabindingview.closablelayouts.ClosableBaseLinearLayout;
 
 import java.util.Collections;
 import java.util.Comparator;

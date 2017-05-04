@@ -1,9 +1,9 @@
-package com.developer.paul.closableview.closableItem;
+package com.developer.paul.closabledatabindingview.closableItem;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
-import com.developer.paul.closableview.interfaces.ClosableItem;
+import com.developer.paul.closabledatabindingview.interfaces.ClosableItem;
 
 /**
  * Created by Paul on 4/5/17.
