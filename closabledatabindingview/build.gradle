@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 android {
     compileSdkVersion 25
@@ -31,4 +33,30 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
+}
+
+signing {
+    required { gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    configuration = configurations.archives
+
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: 'http://127.0.0.1:8081/repository/paulunimelb/') {
+            authentication(userName: 'admin', password: 'admin123')
+        }
+
+        pom.project {
+            version '1.0.0'
+            artifactId 'closabledatabindingview'
+            groupId 'com.unimelb.itime'
+            packaging 'aar'
+            url 'http://127.0.0.1:8081/repository/paulunimelb/'
+            description 'dependences lib'
+        }
+    }
 }
