@@ -20,7 +20,7 @@ import java.util.HashMap;
  * Created by Paul on 3/5/17.
  */
 
-public class ClosableRowLinearLayout extends ClosableBaseLinearLayout<RowItem> {
+public class ClosableRowLinearLayout extends ClosableBaseLinearLayout {
 
 
     public ClosableRowLinearLayout(Context context) {

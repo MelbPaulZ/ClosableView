@@ -16,11 +16,14 @@ allprojects {
     repositories {
         jcenter()
         mavenLocal()
+        maven{
+            url 'http://146.118.101.148/repository/recycleviewgroup/'
+        }
     }
 
     dependencies{
         repositories{
-            maven { url 'http://127.0.0.1:8081/repository/paulunimelb/'}
+            maven { url 'http://146.118.101.148/repository/itime/'}
         }
     }
 }

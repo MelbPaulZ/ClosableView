@@ -1,12 +1,17 @@
 package com.developer.paul.closabledatabindingview.closablelayouts;
 
 import android.content.Context;
+import android.databinding.BindingMethod;
+import android.databinding.BindingMethods;
+import android.databinding.ObservableList;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.developer.paul.closabledatabindingview.interfaces.ClosableFactory;
 import com.developer.paul.closabledatabindingview.interfaces.ClosableItem;
+import com.developer.paul.closabledatabindingview.utils.ClosableDataBindingUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,10 +21,15 @@ import java.util.List;
  * Created by Paul on 4/5/17.
  */
 
-public abstract class ClosableBaseLinearLayout<T extends ClosableItem> extends LinearLayout {
+@BindingMethods({
+        @BindingMethod(type = ClosableBaseLinearLayout.class, attribute = "orderHashMap", method = "setOrderHash"),
+        @BindingMethod(type = ClosableBaseLinearLayout.class, attribute = "items", method = "addList")
+})
+public abstract class ClosableBaseLinearLayout extends LinearLayout {
     protected ClosableFactory closableFactory;
     protected HashMap<String, Integer> orderHash;
-    protected List<T> curViewList;
+    protected List<ClosableItem> curViewList;
+    protected List<? extends ClosableItem> originList;
 
 
     public ClosableBaseLinearLayout(Context context) {
@@ -36,6 +46,29 @@ public abstract class ClosableBaseLinearLayout<T extends ClosableItem> extends L
         orderHash = new HashMap<>();
         curViewList = new ArrayList<>();
         closableFactory = getFactory();
+        closableFactory.setOnDeleteListener(onDeleteListener());
+    }
+
+    private OnClickListener onDeleteListener(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClosableRelativeLayout btnLayout = (ClosableRelativeLayout) v.getParent();
+                if (btnLayout==null){
+                    return;
+                }
+
+                LinearLayout btnLayoutParent = (LinearLayout) btnLayout.getParent();
+                if (btnLayoutParent==null){
+                    return;
+                }
+
+                ClosableItem item = btnLayout.getClosableItem();
+                curViewList.remove(item);
+                remove(item);
+                btnLayoutParent.removeView(btnLayout);
+            }
+        };
     }
 
     public void setOrderHash(HashMap<String, Integer> orderHash) {
@@ -46,7 +79,15 @@ public abstract class ClosableBaseLinearLayout<T extends ClosableItem> extends L
         this.closableFactory.setOnDeleteListener(onDeleteListener);
     }
 
-    public void add(T t){
+    public void addList(ObservableList<? extends ClosableItem> tList){
+        ClosableDataBindingUtil.sortClosableItem(orderHash, tList);
+        originList = tList;
+        for (ClosableItem item: tList){
+            add(item);
+        }
+    }
+
+    public void add(ClosableItem t){
         ClosableRelativeLayout btnLayout = closableFactory.create(t);
         if (btnLayout.getParent()==null){
             int position = findPosition(t.getItemName());
@@ -55,8 +96,9 @@ public abstract class ClosableBaseLinearLayout<T extends ClosableItem> extends L
         }
     }
 
-    public void remove(T t){
+    public void remove(ClosableItem t){
         curViewList.remove(t);
+        originList.remove(t);
     }
 
     private int findPosition(String rowName){

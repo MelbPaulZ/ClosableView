@@ -46,16 +46,16 @@ uploadArchives {
     repositories.mavenDeployer {
         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-        repository(url: 'http://127.0.0.1:8081/repository/paulunimelb/') {
+        repository(url: 'http://146.118.101.148/repository/itime/') {
             authentication(userName: 'admin', password: 'admin123')
         }
 
         pom.project {
             version '1.0.0'
-            artifactId 'closabledatabindingview'
+            artifactId 'closableview'
             groupId 'com.unimelb.itime'
             packaging 'aar'
-            url 'http://127.0.0.1:8081/repository/paulunimelb/'
+            url 'http://146.118.101.148/repository/itime/'
             description 'dependences lib'
         }
     }

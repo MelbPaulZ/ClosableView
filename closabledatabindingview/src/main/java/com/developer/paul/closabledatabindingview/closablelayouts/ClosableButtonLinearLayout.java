@@ -17,7 +17,7 @@ import java.util.HashMap;
  * Created by Paul on 4/5/17.
  */
 
-public class ClosableButtonLinearLayout extends ClosableBaseLinearLayout<ButtonItem> {
+public class ClosableButtonLinearLayout extends ClosableBaseLinearLayout {
     public ClosableButtonLinearLayout(Context context) {
         super(context);
         init();
