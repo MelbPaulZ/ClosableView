@@ -22,8 +22,8 @@ import java.util.List;
  */
 
 @BindingMethods({
-        @BindingMethod(type = ClosableBaseLinearLayout.class, attribute = "orderHashMap", method = "setOrderHash"),
-        @BindingMethod(type = ClosableBaseLinearLayout.class, attribute = "items", method = "addList")
+        @BindingMethod(type = ClosableBaseLinearLayout.class, attribute = "ClosableBaseLinearLayout:orderHashMap", method = "setOrderHash"),
+        @BindingMethod(type = ClosableBaseLinearLayout.class, attribute = "ClosableBaseLinearLayout:closableItems", method = "addList")
 })
 public abstract class ClosableBaseLinearLayout extends LinearLayout {
     protected ClosableFactory closableFactory;
